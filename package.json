@@ -1,0 +1,32 @@
+{
+  "name": "simple-ftp-deploy",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Deploy a folder via ftp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "deploy",
+    "ftp"
+  ],
+  "author": {
+    "name": "Mark Wylde",
+    "email": "me@markwylde.com",
+    "url": "https://github.com/markwylde"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "basic-ftp": "^5.0.2"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/markwylde/simple-ftp-deploy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/markwylde/simple-ftp-deploy/issues"
+  },
+  "homepage": "https://github.com/markwylde/simple-ftp-deploy#readme"
+}
