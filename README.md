@@ -3,7 +3,7 @@ Deploy a folder to an ftp server.
 
 ## Installation
 ```
-npm install simple-ftp-deploy
+npm install @markwylde/ftp-deploy
 ```
 
 ## Usage
@@ -14,7 +14,7 @@ simple-ftp-deploy deployConfig.js
 
 ### Via API
 ```javascript
-import deploy from 'simple-ftp-deploy';
+import deploy from '@markwylde/ftp-deploy';
 
 const config = [{
   hostname: process.env.WEBSITE1_FTP_HOSTNAME,

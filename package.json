@@ -1,5 +1,6 @@
 {
-  "name": "simple-ftp-deploy",
+  "name": "@markwylde/ftp-deploy",
+  "private": false,
   "version": "1.0.0",
   "type": "module",
   "description": "Deploy a folder via ftp",
