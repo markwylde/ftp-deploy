@@ -17,7 +17,7 @@ const ftpsync = async (config) => {
       });
       await client.ensureDir(task.destination);
       await client.clearWorkingDir();
-      await client.uploadFromDir(task.source, task.destination);
+      await client.uploadFromDir(task.source);
     } finally {
       client.close()  
     } 
