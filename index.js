@@ -31,7 +31,7 @@ const modulePath = path.resolve(fileURLToPath(import.meta.url))
 const isRunningDirectlyViaCLI = nodePath === modulePath
 if (isRunningDirectlyViaCLI) {
   (async function() {
-    const configFile = process.argv[2];
+    const configFile = path.join(process.cwd(), process.argv[2]);
     if (!configFile) {
       throw new Error('You must specify a config file');
     }
