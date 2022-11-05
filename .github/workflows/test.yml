@@ -1,0 +1,30 @@
+name: Node.js Test Runner
+
+on: [push]
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install ftpserver
+      run: go install github.com/fclairamb/ftpserver@main
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - run: npm install
+
+    - name: Run tests
+      run: |
+        export PATH=${PATH}:`go env GOPATH`/bin
+        node test
