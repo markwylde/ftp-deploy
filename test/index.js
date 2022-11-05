@@ -16,7 +16,7 @@ const wipe = async () => {
   await fs.mkdir('/tmp/test');
 };
 
-const serverChildProcess = spawn('~/go/bin/ftpserver', { cwd: 'test/helpers' });
+const serverChildProcess = spawn('ftpserver', { cwd: 'test/helpers' });
 const logs = [];
 serverChildProcess.stdout.on('data', buffer => logs.push(buffer.toString()));
 serverChildProcess.stderr.on('data', buffer => logs.push(buffer.toString()));
