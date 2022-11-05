@@ -20,6 +20,8 @@ const serverChildProcess = spawn('ftpserver', { cwd: 'test/helpers', stdio: 'inh
 
 const { test, run } = createTestSuite({ concurrency: 1 });
 
+await new Promise(resolve => setTimeout(resolve, 500));
+
 test('sync folder to root works', async t => {
   t.plan(1);
 
