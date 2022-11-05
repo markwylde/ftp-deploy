@@ -16,16 +16,7 @@ const wipe = async () => {
   await fs.mkdir('/tmp/test');
 };
 
-const serverChildProcess = spawn('ftpserver', { cwd: 'test/helpers' });
-const logs = [];
-serverChildProcess.stdout.on('data', buffer => logs.push(buffer.toString()));
-serverChildProcess.stderr.on('data', buffer => logs.push(buffer.toString()));
-serverChildProcess.on('close', () => {
-  console.log('\n---------------------');
-  console.log('ftpserver log output:');
-  console.log('---------------------');
-  logs.forEach(i => console.log(i));
-});
+const serverChildProcess = spawn('ftpserver', { cwd: 'test/helpers', stdio: 'inherit' });
 
 const { test, run } = createTestSuite({ concurrency: 1 });
 
