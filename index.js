@@ -45,7 +45,7 @@ const ftpsync = async (config) => {
         await client.uploadFrom(task.source, destinationFile);
       }
     } finally {
-      client.close();
+      await client.close();
     }
   }
 };
