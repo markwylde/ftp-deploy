@@ -30,7 +30,6 @@
     "basic-ftp": "^5.0.5"
   },
   "devDependencies": {
-    "globby": "^14.0.1",
-    "just-tap": "^2.9.4"
+    "globby": "^14.0.1"
   }
 }

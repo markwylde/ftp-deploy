@@ -1,8 +1,9 @@
-import createTestSuite from 'just-tap';
+import { strict as assert } from 'assert';
 import { promises as fs } from 'fs';
 import deploy from '../index.js';
 import { globby } from 'globby';
 import { spawn } from 'child_process';
+import { test } from 'node:test';
 
 const ftpAccess = {
   hostname: 'localhost',
@@ -18,13 +19,9 @@ const wipe = async () => {
 
 const serverChildProcess = spawn('ftpserver', { cwd: 'test/helpers', stdio: 'inherit' });
 
-const { test, run } = createTestSuite({ concurrency: 1 });
-
 await new Promise(resolve => setTimeout(resolve, 500));
 
-test('sync folder to root works', async t => {
-  t.plan(1);
-
+test('sync folder to root works', async () => {
   await wipe();
 
   const config = {
@@ -39,15 +36,13 @@ test('sync folder to root works', async t => {
 
   const files = await globby('/tmp/test');
 
-  t.deepEqual(files, [
+  assert.deepEqual(files, [
     '/tmp/test/a.txt',
     '/tmp/test/b/c.txt'
   ]);
 });
 
-test('sync folder to subdirectory works', async t => {
-  t.plan(1);
-
+test('sync folder to subdirectory works', async () => {
   await wipe();
 
   const config = {
@@ -62,15 +57,13 @@ test('sync folder to subdirectory works', async t => {
 
   const files = await globby('/tmp/test');
 
-  t.deepEqual(files, [
+  assert.deepEqual(files, [
     '/tmp/test/sub/a.txt',
     '/tmp/test/sub/b/c.txt'
   ]);
 });
 
-test('sync sub directory to root works', async t => {
-  t.plan(1);
-
+test('sync sub directory to root works', async () => {
   await wipe();
 
   const config = {
@@ -85,14 +78,12 @@ test('sync sub directory to root works', async t => {
 
   const files = await globby('/tmp/test');
 
-  t.deepEqual(files, [
+  assert.deepEqual(files, [
     '/tmp/test/c.txt'
   ]);
 });
 
-test('sync single file to root works', async t => {
-  t.plan(1);
-
+test('sync single file to root works', async () => {
   await wipe();
 
   const config = {
@@ -107,14 +98,12 @@ test('sync single file to root works', async t => {
 
   const files = await globby('/tmp/test');
 
-  t.deepEqual(files, [
+  assert.deepEqual(files, [
     '/tmp/test/a.txt'
   ]);
 });
 
-test('sync single file to subdirectory works', async t => {
-  t.plan(1);
-
+test('sync single file to subdirectory works', async () => {
   await wipe();
 
   const config = {
@@ -129,14 +118,12 @@ test('sync single file to subdirectory works', async t => {
 
   const files = await globby('/tmp/test');
 
-  t.deepEqual(files, [
+  assert.deepEqual(files, [
     '/tmp/test/b/a.txt'
   ]);
 });
 
-test('sync folder without log', async t => {
-  t.plan(2);
-
+test('sync folder without log', async () => {
   await wipe();
 
   const logData = [];
@@ -155,17 +142,15 @@ test('sync folder without log', async t => {
 
   const files = await globby('/tmp/test');
 
-  t.deepEqual(files, [
+  assert.deepEqual(files, [
     '/tmp/test/a.txt',
     '/tmp/test/b/c.txt'
   ]);
 
-  t.ok(logData.length > 0, 'had at least 1 log entry');
+  assert.ok(logData.length > 0, 'had at least 1 log entry');
 });
 
-test('sync folder with log', async t => {
-  t.plan(2);
-
+test('sync folder with log', async () => {
   await wipe();
 
   const logData = [];
@@ -185,17 +170,15 @@ test('sync folder with log', async t => {
 
   const files = await globby('/tmp/test');
 
-  t.deepEqual(files, [
+  assert.deepEqual(files, [
     '/tmp/test/a.txt',
     '/tmp/test/b/c.txt'
   ]);
 
-  t.ok(logData.length > 0, 'had at least 1 log entry');
+  assert.ok(logData.length > 0, 'had at least 1 log entry');
 });
 
-test('sync folder to root works wiping without clear existing files', async t => {
-  t.plan(1);
-
+test('sync folder to root works wiping without clear existing files', async () => {
   await wipe();
   await fs.writeFile('/tmp/test/d.txt', 'this is d.txt');
 
@@ -211,16 +194,14 @@ test('sync folder to root works wiping without clear existing files', async t =>
 
   const files = await globby('/tmp/test');
 
-  t.deepEqual(files, [
+  assert.deepEqual(files, [
     '/tmp/test/a.txt',
     '/tmp/test/d.txt',
     '/tmp/test/b/c.txt'
   ]);
 });
 
-test('sync folder to root works wiping with clear existing files', async t => {
-  t.plan(1);
-
+test('sync folder to root works wiping with clear existing files', async () => {
   await wipe();
   await fs.writeFile('/tmp/test/d.txt', 'this is d.txt');
 
@@ -237,11 +218,12 @@ test('sync folder to root works wiping with clear existing files', async t => {
 
   const files = await globby('/tmp/test');
 
-  t.deepEqual(files, [
+  assert.deepEqual(files, [
     '/tmp/test/a.txt',
     '/tmp/test/b/c.txt'
   ]);
 });
 
-await run();
-serverChildProcess.kill();
+test.after(() => {
+  serverChildProcess.kill('SIGKILL');
+});
