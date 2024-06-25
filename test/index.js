@@ -13,7 +13,7 @@ const ftpAccess = {
 
 const wipe = async () => {
   await fs.rm('/tmp/test', { recursive: true, force: true });
-  await fs.mkdir('/tmp/test');
+  await fs.mkdir('/tmp/test', { recursive: true, force: true });
 };
 
 const serverChildProcess = spawn('ftpserver', { cwd: 'test/helpers', stdio: 'inherit' });
